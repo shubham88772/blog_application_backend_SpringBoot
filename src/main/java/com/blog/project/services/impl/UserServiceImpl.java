@@ -1,6 +1,7 @@
 package com.blog.project.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,18 +9,19 @@ import com.blog.project.entities.User;
 import com.blog.project.payloads.UserDto;
 import com.blog.project.repositories.UserRepo;
 import com.blog.project.services.UserService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepo userRepo;
 
 	@Override
-	public UserDto createUser(UserDto user) {
-		// TODO Auto-generated method stub
-		User user1=this.dtoToUser(user);
-		
-		this.userRepo.save(user1);
-		return null;
+	public UserDto createUser(UserDto userDto) {
+		User user= this.dtoToUser(userDto);
+		User savedUser=this.userRepo.save(user);
+		UserDto afterConversion=this.userToDto(savedUser);
+		return afterConversion;
 	}
 
 	@Override
@@ -36,8 +38,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserDto> getAllUser() {
-		// TODO Auto-generated method stub
-		return null;
+		List<User> allUser=userRepo.findAll();
+		List<UserDto> dtoUsers=allUser.stream().map(user -> userToDto(user)).collect(Collectors.toList());
+		return dtoUsers;
 	}
 
 	@Override
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 
 	}
+
 	private User dtoToUser(UserDto userDto) {
 
 		User user = new User();
@@ -61,9 +65,9 @@ public class UserServiceImpl implements UserService {
 
 		return user;
 
-		}
+	}
 
-		public UserDto userToDto(User user) {
+	public UserDto userToDto(User user) {
 
 		UserDto userDto = new UserDto();
 
@@ -71,12 +75,13 @@ public class UserServiceImpl implements UserService {
 
 		userDto.setName(user.getName());
 
-		userDto.setEmail(user.getEmail()); 
-		
+		userDto.setEmail(user.getEmail());
+
 		userDto.setPassword(user.getPassword());
 
 		userDto.setAbout(user.getAbout());
 
 		return userDto;
 
+	}
 }
