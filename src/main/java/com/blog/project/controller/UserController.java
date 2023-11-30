@@ -1,9 +1,11 @@
 package com.blog.project.controller;
 
+import com.blog.project.payloads.ApiResponse;
 import com.blog.project.payloads.UserDto;
 import com.blog.project.services.UserService;
-import com.blog.project.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,30 +16,31 @@ public class UserController {
     @Autowired
     private UserService userService;
     @PostMapping("/add")
-    public UserDto createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
         UserDto createdUser=userService.createUser(userDto);
-        return createdUser;
+        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
     @GetMapping("/allusers")
-    public List<UserDto> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers(){
        List<UserDto> allUsers=this.userService.getAllUser();
-       return allUsers;
+       return new ResponseEntity<>(allUsers,HttpStatus.ACCEPTED);
     }
     @PutMapping("/update/{userId}")
-    public UserDto updatedUser(@RequestBody UserDto userDto,@PathVariable int userId){
+    public ResponseEntity<UserDto> updatedUser(@RequestBody UserDto userDto,@PathVariable int userId){
         UserDto updated=userService.updateUser(userDto,userId);
-        return updated;
+        return ResponseEntity.ok(updated);
 
     }
     @GetMapping("/userid/{userId}")
-    public UserDto findById(@PathVariable int userId){
+    public ResponseEntity<UserDto> findById(@PathVariable int userId){
         UserDto user=userService.getUserById(userId);
-        return user;
+        return ResponseEntity.ok(user);
 
     }
     @DeleteMapping("/delete/{userId}")
-    public void deleteUser(@PathVariable int userId){
+    public ResponseEntity<?> deleteUser(@PathVariable int userId){
         this.userService.deleteUser(userId);
+        return new ResponseEntity<>(new ApiResponse("User deleted successfull",true),HttpStatus.OK);
     }
 
 }
