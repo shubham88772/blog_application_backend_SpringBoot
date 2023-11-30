@@ -1,7 +1,9 @@
 package com.blog.project.services.impl;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 import java.util.stream.Collectors;
+import com.blog.project.exceptions.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,15 +27,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto updateUser(UserDto user, int userId) {
+	public UserDto updateUser(UserDto userDto, int userId) {
+		User user=this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","id",userId));
 		// TODO Auto-generated method stub
-		return null;
+		user.setName(userDto.getName());
+		user.setAbout(userDto.getAbout());
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+		User updated=userRepo.save(user);
+		UserDto updatedToDto=this.userToDto(updated);
+
+		return updatedToDto;
 	}
 
 	@Override
 	public UserDto getUserById(int userId) {
 		// TODO Auto-generated method stub
-		return null;
+		User user=userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User","Id",userId));
+		UserDto userDto=userToDto(user);
+		return userDto;
 	}
 
 	@Override
@@ -45,6 +57,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(int userId) {
+		User user=this.userRepo.findById(userId).orElseThrow(()-> new  ResourceNotFoundException("User","Id",userId));
+		this.userRepo.delete(user);
 		// TODO Auto-generated method stub
 
 	}

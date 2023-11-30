@@ -23,5 +23,21 @@ public class UserController {
        List<UserDto> allUsers=this.userService.getAllUser();
        return allUsers;
     }
+    @PutMapping("/update/{userId}")
+    public UserDto updatedUser(@RequestBody UserDto userDto,@PathVariable int userId){
+        UserDto updated=userService.updateUser(userDto,userId);
+        return updated;
+
+    }
+    @GetMapping("/userid/{userId}")
+    public UserDto findById(@PathVariable int userId){
+        UserDto user=userService.getUserById(userId);
+        return user;
+
+    }
+    @DeleteMapping("/delete/{userId}")
+    public void deleteUser(@PathVariable int userId){
+        this.userService.deleteUser(userId);
+    }
 
 }
