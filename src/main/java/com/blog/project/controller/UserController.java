@@ -43,5 +43,22 @@ public class UserController {
         this.userService.deleteUser(userId);
         return new ResponseEntity<>(new ApiResponse("User deleted successfull",true),HttpStatus.OK);
     }
+//    @GetMapping("/login/{userId}")
+//    public boolean login(@RequestBody UserDto userDto, @PathVariable int userId ){
+//        boolean loggedin=false;
+//        String id=userDto.getEmail();
+//        String pass=userDto.getPassword();
+//        if (userService.getUserById(userId).getEmail()==id&&userService.getUserById(userId).getPassword()==pass){
+//            loggedin=true;
+//        }else {
+//            loggedin=false;
+//        }
+//        return loggedin;
+//    }
+    @GetMapping("/login")
+    public boolean login(@RequestBody UserDto userDto){
+        boolean valid=userService.login(userDto);
+        return valid;
+    }
 
 }

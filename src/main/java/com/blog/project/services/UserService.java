@@ -14,6 +14,7 @@ public interface UserService {
 	List<UserDto> getAllUser();
 	
 	void deleteUser(int userId);
-	
 
+
+	boolean login(UserDto userDto);
 }

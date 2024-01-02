@@ -65,6 +65,26 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Override
+	public boolean login(UserDto userDto) {
+		boolean trueOrFalse;
+		User toUser=this.modelMapper.map(userDto,User.class);
+		User found=this.userRepo.findById(userDto.getId()).orElseThrow(()-> new ResourceNotFoundException("User","Id", userDto.getId()));
+		System.out.println(toUser.getEmail());
+		System.out.println(toUser.getPassword());
+		System.out.println(found.getEmail());
+		System.out.println(found.getPassword());
+		if(toUser.getEmail().equals(found.getEmail())&& toUser.getPassword().equals(found.getPassword())){
+			trueOrFalse=true;
+			System.out.println("User Loggedin");
+		}else{
+			trueOrFalse=false;
+			System.out.println("Not Authenticated");
+		}
+		return trueOrFalse;
+
+	}
+
 	private User dtoToUser(UserDto userDto) {
 		User user=this.modelMapper.map(userDto,User.class);
 
