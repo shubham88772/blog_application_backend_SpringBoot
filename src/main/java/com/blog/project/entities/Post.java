@@ -1,11 +1,19 @@
 package com.blog.project.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "post")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +25,7 @@ public class Post {
     private String imageName;
     private Date addedDate;
     @ManyToOne
+    @JoinColumn(name="category_id")
     private Category category;
     @ManyToOne
     private User user;

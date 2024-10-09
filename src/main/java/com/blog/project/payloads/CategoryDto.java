@@ -24,6 +24,6 @@ public class CategoryDto {
     @NotBlank
     @Size(min = 10,message = "min is 10")
     private String categoryDescription;
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Post> posts=new ArrayList<>();
+//    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    private List<Post> posts=new ArrayList<>();
 }

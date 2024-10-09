@@ -20,6 +20,9 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
         UserDto createdUser=userService.createUser(userDto);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+//    public String createUser(@Valid @RequestBody UserDto userDto){
+//        String createdUser=userService.createUser(userDto);
+//        return createdUser;
     }
     @GetMapping("/allusers")
     public ResponseEntity<List<UserDto>> getAllUsers(){

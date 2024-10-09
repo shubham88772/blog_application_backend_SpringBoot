@@ -1,6 +1,7 @@
 package com.blog.project.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import com.blog.project.exceptions.*;
 
@@ -23,9 +24,22 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		User user= this.dtoToUser(userDto);
-		User savedUser=this.userRepo.save(user);
-		UserDto afterConversion=this.userToDto(savedUser);
-		return afterConversion;
+////		String mail= String.valueOf(userRepo.findByEmail(user.getEmail()));
+////		if(user.getEmail().equals(mail)){
+////			System.out.println("User Already Exist");
+////		}
+//		Optional<User> existingUser=userRepo.findByEmail(user.getEmail());
+//		if (existingUser.isPresent()){
+//			return "User Already Exist"+" "+user.getEmail();
+//		}else {
+//			User savedUser=this.userRepo.save(user);
+//			UserDto afterConversion=this.userToDto(savedUser);
+//			return "User Saved";
+//		}
+		User saved = userRepo.save(user);
+		UserDto converted=userToDto(saved);
+		return converted;
+
 	}
 
 	@Override
@@ -70,10 +84,10 @@ public class UserServiceImpl implements UserService {
 		boolean trueOrFalse;
 		User toUser=this.modelMapper.map(userDto,User.class);
 		User found=this.userRepo.findById(userDto.getId()).orElseThrow(()-> new ResourceNotFoundException("User","Id", userDto.getId()));
-		System.out.println(toUser.getEmail());
-		System.out.println(toUser.getPassword());
-		System.out.println(found.getEmail());
-		System.out.println(found.getPassword());
+//		System.out.println(toUser.getEmail());
+//		System.out.println(toUser.getPassword());
+//		System.out.println(found.getEmail());
+//		System.out.println(found.getPassword());
 		if(toUser.getEmail().equals(found.getEmail())&& toUser.getPassword().equals(found.getPassword())){
 			trueOrFalse=true;
 			System.out.println("User Loggedin");
