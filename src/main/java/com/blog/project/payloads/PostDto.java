@@ -1,6 +1,7 @@
 package com.blog.project.payloads;
 
 import com.blog.project.entities.Category;
+import com.blog.project.entities.Comment;
 import com.blog.project.entities.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +12,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,6 +31,7 @@ public class PostDto {
     private Date addedDate;
     private CategoryDto category;
     private UserDto user;
+    private Set<CommentDto> comments=new HashSet<>();
 
 
 }
