@@ -12,10 +12,12 @@ import com.blog.project.entities.User;
 import com.blog.project.payloads.UserDto;
 import com.blog.project.repositories.UserRepo;
 import com.blog.project.services.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 	@Autowired
 	private UserRepo userRepo;
 	@Autowired
@@ -132,4 +134,9 @@ public class UserServiceImpl implements UserService {
 		return userDto;
 
 	}
+
+//	@Override
+//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//		return userRepo.findByEmail(username).orElseThrow(()->new ResourceNotFoundException("User not found","try again"));
+//	}
 }

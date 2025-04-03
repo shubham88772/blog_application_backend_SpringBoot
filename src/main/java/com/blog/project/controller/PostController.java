@@ -67,6 +67,7 @@ public class PostController {
     public ResponseEntity<List<PostDto>> searchPostByTitle(@PathVariable String title){
         List<PostDto> postDtos = this.postService.searchPost(title);
         return new ResponseEntity<List<PostDto>>(postDtos,HttpStatus.OK);
+
     }
 
 
